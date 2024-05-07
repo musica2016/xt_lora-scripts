@@ -80,8 +80,10 @@ async def create_toml_file(request: Request):
         return APIResponseFail(message=message)
 
     sample_prompts = config.get("sample_prompts", None)
-    if sample_prompts is not None and not os.path.exists(sample_prompts) and train_utils.is_promopt_like(sample_prompts):
+    if sample_prompts is not None and not os.path.exists(sample_prompts) and train_utils.is_promopt_like(
+            sample_prompts):
         sample_prompts_file = os.path.join(os.getcwd(), f"config", "autosave", f"{timestamp}-promopt.txt")
+        sample_prompts_file = sample_prompts_file.replace("\\", "/")
         with open(sample_prompts_file, "w", encoding="utf-8") as f:
             f.write(sample_prompts)
         config["sample_prompts"] = sample_prompts_file
