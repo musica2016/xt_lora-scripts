@@ -2,7 +2,7 @@ Schema.intersect([
 
     Schema.object({
         pretrained_model_name_or_path: Schema.string().role('filepicker').default("C:/stable-diffusion-webui-1.6.0/models/Stable-diffusion/国风3 GuoFeng3_v3.4.safetensors").description("底模文件路径"),
-        train_data_dir: Schema.string().role('filepicker', { type: "folder" }).default("E:/asktao").description("训练数据集路径"),
+        train_data_dir: Schema.string().role('filepicker', { type: "folder" }).default("E:/train_dir").description("训练数据集路径"),
         max_train_epochs: Schema.number().min(1).default(100).description("最大训练 epoch（轮数）"),
         train_batch_size: Schema.number().min(1).default(10).description("批量大小"),
         gradient_accumulation_steps: Schema.number().min(1).default(4).description("梯度累加步数"),
