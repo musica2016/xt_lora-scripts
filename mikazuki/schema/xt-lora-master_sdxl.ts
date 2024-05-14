@@ -10,7 +10,7 @@ Schema.intersect([
     }).description("小唐版自适应核心参数- SDXL -基础项"),
 
     Schema.object({
-        network_dim: Schema.number().min(1).default(16).description("网络维度，小于等于64，不是越大越好"),
+        network_dim: Schema.number().min(1).default(16).description("网络维度，默认采用 lycoris，因此必须小于等于64，不是越大越好"),
         network_alpha: Schema.number().min(1).default(8).description("常用值：等于 network_dim 或 network_dim*1/2 或 1。"),
         conv_dim: Schema.number().default(4),
         conv_alpha: Schema.number().default(1),
