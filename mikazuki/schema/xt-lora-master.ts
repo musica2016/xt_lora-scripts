@@ -4,12 +4,13 @@ Schema.intersect([
         pretrained_model_name_or_path: Schema.string().role('filepicker').default("C:/stable-diffusion-webui-1.6.0/models/Stable-diffusion/国风3 GuoFeng3_v3.4.safetensors").description("底模文件路径"),
         train_data_dir: Schema.string().role('filepicker', { type: "folder" }).default("E:/train_dir").description("训练数据集路径"),
         max_train_epochs: Schema.number().min(1).default(100).description("最大训练 epoch（轮数）"),
-        train_batch_size: Schema.number().min(1).default(10).description("批量大小"),
-        gradient_accumulation_steps: Schema.number().min(1).default(4).description("梯度累加步数"),
+        train_batch_size: Schema.number().min(1).default(20).description("批量大小"),
+        gradient_accumulation_steps: Schema.number().min(1).default(5).description("梯度累加步数"),
         sample_prompts: Schema.string().role('textarea').default("(masterpiece, best quality:1.2),  --n lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry,  --w 512  --h 512  --l 7  --s 24  --d 1337").description("预览图提示词"),
     }).description("小唐版自适应核心参数- SD -基础项"),
 
     Schema.object({
+        reg_data_dir: Schema.string().role('filepicker', { type: "folder" }).description("正则化数据集路径。默认留空，不使用正则化图像"),
         network_dim: Schema.number().min(1).default(16).description("网络维度，默认采用 lycoris，因此必须小于等于64，不是越大越好"),
         network_alpha: Schema.number().min(1).default(8).description("常用值：等于 network_dim 或 network_dim*1/2 或 1。"),
         conv_dim: Schema.number().default(4),
