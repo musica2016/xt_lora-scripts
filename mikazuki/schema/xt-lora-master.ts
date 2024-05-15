@@ -11,12 +11,12 @@ Schema.intersect([
 
     Schema.object({
         reg_data_dir: Schema.string().role('filepicker', { type: "folder" }).description("正则化数据集路径。默认留空，不使用正则化图像"),
-        network_dim: Schema.number().min(1).default(16).description("网络维度，默认采用 lycoris，因此必须小于等于64，不是越大越好"),
-        network_alpha: Schema.number().min(1).default(8).description("常用值：等于 network_dim 或 network_dim*1/2 或 1。"),
+        network_dim: Schema.number().min(1).default(8).description("网络维度，默认采用 lycoris，因此必须小于等于64，不是越大越好"),
+        network_alpha: Schema.number().min(1).default(1).description("常用值：等于 network_dim 或 network_dim*1/2 或 1。"),
         conv_dim: Schema.number().default(4),
         conv_alpha: Schema.number().default(1),
         shuffle_caption: Schema.boolean().default(true).description("训练时随机打乱 tokens"),
-        keep_tokens: Schema.number().min(0).max(255).step(1).default(1).description("在随机打乱 tokens 时，保留前 N 个不变"),
+        keep_tokens: Schema.number().min(0).max(255).step(1).default(2).description("在随机打乱 tokens 时，保留前 N 个不变"),
     }).description("小唐版自适应核心参数- SD -可选项"),
 
     Schema.intersect([
@@ -138,8 +138,8 @@ Schema.intersect([
             Schema.object({
                 network_module: Schema.union(["networks.lora", "networks.dylora", "networks.oft", "lycoris.kohya"]).default("lycoris.kohya").description("训练网络模块"),
                 network_weights: Schema.string().role('filepicker').description("从已有的 LoRA 模型上继续训练，填写路径"),
-                network_dim: Schema.number().min(1).default(16).description("网络维度，常用 4~128，不是越大越好"),
-                network_alpha: Schema.number().min(1).default(8).description("常用值：等于 network_dim 或 network_dim*1/2 或 1。使用较小的 alpha 需要提升学习率。"),
+                network_dim: Schema.number().min(1).default(8).description("网络维度，常用 4~128，不是越大越好"),
+                network_alpha: Schema.number().min(1).default(1).description("常用值：等于 network_dim 或 network_dim*1/2 或 1。"),
                 network_dropout: Schema.number().step(0.01).default(0).description('dropout 概率 （与 lycoris 不兼容，需要用 lycoris 自带的）'),
                 scale_weight_norms: Schema.number().step(0.01).min(0).description("最大范数正则化。如果使用，推荐为 1"),
                 network_args_custom: Schema.array(String).role('table').description('自定义 network_args，一行一个'),
@@ -229,7 +229,7 @@ Schema.intersect([
             caption_extension: Schema.string().default(".txt").description("Tag 文件扩展名"),
             shuffle_caption: Schema.boolean().default(true).description("训练时随机打乱 tokens"),
             weighted_captions: Schema.boolean().description("使用带权重的 token，不推荐与 shuffle_caption 一同开启"),
-            keep_tokens: Schema.number().min(0).max(255).step(1).default(1).description("在随机打乱 tokens 时，保留前 N 个不变"),
+            keep_tokens: Schema.number().min(0).max(255).step(1).default(2).description("在随机打乱 tokens 时，保留前 N 个不变"),
             keep_tokens_separator: Schema.string().description("保留 tokens 时使用的分隔符"),
             max_token_length: Schema.number().default(255).description("最大 token 长度"),
             caption_dropout_rate: Schema.number().min(0).step(0.01).description("丢弃全部标签的概率，对一个图片概率不使用 caption 或 class token"),
