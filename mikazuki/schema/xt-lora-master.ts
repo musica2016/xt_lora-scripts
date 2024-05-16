@@ -4,8 +4,8 @@ Schema.intersect([
         pretrained_model_name_or_path: Schema.string().role('filepicker').default("C:/stable-diffusion-webui-1.6.0/models/Stable-diffusion/国风3 GuoFeng3_v3.4.safetensors").description("底模文件路径"),
         train_data_dir: Schema.string().role('filepicker', { type: "folder" }).default("E:/train_dir").description("训练数据集路径"),
         max_train_epochs: Schema.number().min(1).default(100).description("最大训练 epoch（轮数）"),
-        train_batch_size: Schema.number().min(1).default(20).description("批量大小"),
-        gradient_accumulation_steps: Schema.number().min(1).default(5).description("梯度累加步数"),
+        train_batch_size: Schema.number().min(1).default(8).description("批量大小，在开启 gradient_checkpointing 的情况下，512训练素材的 train_batch_size 可以设置得比较大。"),
+        gradient_accumulation_steps: Schema.number().min(1).default(1).description("梯度累加步数"),
         sample_prompts: Schema.string().role('textarea').default("(masterpiece, best quality:1.2),  --n lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,signature, watermark, username, blurry,  --w 512  --h 512  --l 7  --s 24  --d 1337").description("预览图提示词"),
     }).description("小唐版自适应核心参数- SD -基础项"),
 
@@ -69,9 +69,9 @@ Schema.intersect([
 
         Schema.object({
             max_train_epochs: Schema.number().min(1).default(100).description("最大训练 epoch（轮数）"),
-            train_batch_size: Schema.number().min(1).default(10).description("批量大小"),
+            train_batch_size: Schema.number().min(1).default(20).description("批量大小"),
             gradient_checkpointing: Schema.boolean().default(true).description("梯度检查点"),
-            gradient_accumulation_steps: Schema.number().min(1).default(4).description("梯度累加步数"),
+            gradient_accumulation_steps: Schema.number().min(1).default(2).description("梯度累加步数"),
             network_train_unet_only: Schema.boolean().default(false).description("仅训练 U-Net"),
             network_train_text_encoder_only: Schema.boolean().default(false).description("仅训练文本编码器"),
         }).description("训练相关参数"),
