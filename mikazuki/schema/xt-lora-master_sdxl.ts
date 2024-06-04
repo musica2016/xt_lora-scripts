@@ -16,7 +16,7 @@ Schema.intersect([
         conv_dim: Schema.number().default(4),
         conv_alpha: Schema.number().default(1),
         shuffle_caption: Schema.boolean().default(true).description("训练时随机打乱 tokens"),
-        keep_tokens: Schema.number().min(0).max(255).step(1).default(2).description("在随机打乱 tokens 时，保留前 N 个不变"),
+        keep_tokens: Schema.number().min(0).max(255).step(1).default(3).description("在随机打乱 tokens 时，保留前 N 个不变"),
     }).description("小唐版自适应核心参数- SDXL -可选项"),
 
     Schema.intersect([
@@ -53,7 +53,7 @@ Schema.intersect([
             resolution: Schema.string().default("1024,1024").description("训练图片分辨率，宽x高。支持非正方形，但必须是 64 倍数。"),
             enable_bucket: Schema.boolean().default(true).description("启用 arb 桶以允许非固定宽高比的图片"),
             min_bucket_reso: Schema.number().default(256).description("arb 桶最小分辨率"),
-            max_bucket_reso: Schema.number().default(10240).description("arb 桶最大分辨率"),
+            max_bucket_reso: Schema.number().default(3000).description("arb 桶最大分辨率"),
             bucket_reso_steps: Schema.number().default(32).description("arb 桶分辨率划分单位，SDXL 可以使用 32"),
         }).description("数据集设置"),
 
@@ -138,7 +138,7 @@ Schema.intersect([
             Schema.object({
                 network_module: Schema.union(["networks.lora", "networks.dylora", "networks.oft", "lycoris.kohya"]).default("lycoris.kohya").description("训练网络模块"),
                 network_weights: Schema.string().role('filepicker').description("从已有的 LoRA 模型上继续训练，填写路径"),
-                network_dim: Schema.number().min(1).default(8).description("网络维度，常用 4~128，不是越大越好"),
+                network_dim: Schema.number().min(1).default(16).description("网络维度，常用 4~128，不是越大越好"),
                 network_alpha: Schema.number().min(1).default(1).description("常用值：等于 network_dim 或 network_dim*1/2 或 1。"),
                 network_dropout: Schema.number().step(0.01).default(0).description('dropout 概率 （与 lycoris 不兼容，需要用 lycoris 自带的）'),
                 scale_weight_norms: Schema.number().step(0.01).min(0).description("最大范数正则化。如果使用，推荐为 1"),
